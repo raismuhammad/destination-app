@@ -21,7 +21,7 @@
         <activity
             android:name=".ui.description.DescriptionActivity"
             android:exported="false"
-            android:theme="@style/Theme.Destinasi" />
+            android:theme="@style/Theme.ButtonBack" />
         <activity
             android:name=".ui.province.ProvinceListActivity"
             android:exported="false"

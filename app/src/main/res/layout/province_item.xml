@@ -14,7 +14,7 @@
             android:id="@+id/iv_pict_province"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/no_photo_available"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:fitsSystemWindows="true"/>

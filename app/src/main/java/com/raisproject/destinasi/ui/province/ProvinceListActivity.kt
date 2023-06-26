@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.raisproject.destinasi.adapter.ProvinceAdapter
 import com.raisproject.destinasi.databinding.ActivityProvinceListBinding
 import com.raisproject.destinasi.model.ProvinceModel
+import com.raisproject.destinasi.util.capitalizeWords
 import java.util.Locale
 
 class ProvinceListActivity : AppCompatActivity() {
@@ -29,14 +30,20 @@ class ProvinceListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProvinceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.let {
-            it.setDisplayShowTitleEnabled(false)
-            it.setDisplayHomeAsUpEnabled(false)
+        setSupportActionBar(binding.toolbar)
+
+        supportActionBar?.apply {
+            title = ""
+
+            // show back button on toolbar
+            // on back button press, it will navigate to parent activity
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
         }
 
         val categoryValue: String = intent.getStringExtra("category").toString()
 
-        val titleCategory = "Temukan wisata $categoryValue terbaik"
+        val titleCategory = "wisata $categoryValue".capitalizeWords()
         binding.tvTitleCategory.text = titleCategory
 
         provAdapter = ProvinceAdapter(provinceList)
@@ -101,7 +108,6 @@ class ProvinceListActivity : AppCompatActivity() {
         }
     }
 
-    // action bar back button
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -111,4 +117,6 @@ class ProvinceListActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }

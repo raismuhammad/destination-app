@@ -6,9 +6,16 @@
     </style>
 
     <style name="Theme.Destinasi" parent="Base.Theme.Destinasi" >
-        <item name="android:statusBarColor">@color/primaryColor</item>
+        <item name="android:statusBarColor">@color/secondaryColor</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="titleTextColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="homeAsUpIndicator">@drawable/arrow_back</item>
+    </style>
+
+    <style name="Theme.ButtonBack" parent="Theme.Destinasi">
+        <item name="homeAsUpIndicator">@drawable/arrow_back_background</item>
     </style>
 
     <style name="Theme.SearchViewStyle" parent="Widget.AppCompat.SearchView">
@@ -16,5 +23,13 @@
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColorHint">@color/black</item>
+    </style>
+
+    <style name="Theme.Destinasi.NoStatusBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 </resources>

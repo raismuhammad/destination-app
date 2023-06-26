@@ -4,19 +4,18 @@ import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.Filter
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.raisproject.destinasi.adapter.DestinationAdapter
 import com.raisproject.destinasi.databinding.ActivityDestinationListBinding
 import com.raisproject.destinasi.model.DestinationModel
-import com.raisproject.destinasi.model.ProvinceModel
+import com.raisproject.destinasi.util.capitalizeWords
 import java.util.Locale
 
 class DestinationListActivity : AppCompatActivity() {
@@ -29,23 +28,22 @@ class DestinationListActivity : AppCompatActivity() {
         binding = ActivityDestinationListBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        supportActionBar?.let {
-            it.setDisplayShowTitleEnabled(false)
-            it.setDisplayHomeAsUpEnabled(false)
-        }
+        // set toolbar as support action bar
+        setSupportActionBar(binding.toolbar)
 
         val titleNameProv = intent.getStringExtra("provName")
-        val titleProvince = "wisata $titleNameProv"
-        val titleProv = titleProvince.split(" ").toMutableList()
-        var title = ""
-        for(word in titleProv){
-            title += word.capitalize() +" "
+        val titleProvince = "wisata $titleNameProv".capitalizeWords()
+
+        supportActionBar?.apply {
+            title = titleProvince
+
+            // show back button on toolbar
+            // on back button press, it will navigate to parent activity
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
         }
-        title = title.trim()
-        binding.toolbarTitle.setText(title)
 
         destinationAdapter = DestinationAdapter(destinationList)
-
         val idProv = intent.getStringExtra("id_Prov")
         val nameProv = intent.getStringExtra("provName")
         val nameCategory = intent.getStringExtra("categoryName")
@@ -58,20 +56,24 @@ class DestinationListActivity : AppCompatActivity() {
             ))
             .get()
             .addOnSuccessListener { documents ->
-                destinationList.clear()
-
-               for (document in documents) {
-                    destinationList.add(
-                      (DestinationModel(
-                          document.id as String,
-                          document.data.get("name_destination") as String,
-                          document.data.get("name_prov") as String,
-                          document.data.get("name_category") as String,
-                          document.data.get("address") as String,
-                          document.data.get("pict_destination") as String
-                       ))
-                   )
+                if (documents.documents.isEmpty()) {
+                    binding.dataNotFound.visibility = View.VISIBLE
+                } else {
+                    destinationList.clear()
+                    for (document in documents) {
+                        destinationList.add(
+                            (DestinationModel(
+                                document.id as String,
+                                document.data.get("name_destination") as String,
+                                document.data.get("name_prov") as String,
+                                document.data.get("name_category") as String,
+                                document.data.get("address") as String,
+                                document.data.get("pict_destination") as String
+                            ))
+                        )
+                    }
                 }
+
                 binding.rvDestination.apply {
                     layoutManager = GridLayoutManager(context, 2)
                     adapter = destinationAdapter
@@ -112,6 +114,17 @@ class DestinationListActivity : AppCompatActivity() {
                 destinationAdapter.setFilteredList(filteredList)
             }
         }
+    }
+
+    // action bar back button
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

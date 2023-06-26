@@ -13,6 +13,7 @@ import com.raisproject.destinasi.model.ProvinceModel
 import com.raisproject.destinasi.ui.destinationlist.DestinationListActivity
 import com.raisproject.destinasi.ui.explore.ExploreActivity
 import com.raisproject.destinasi.ui.province.ProvinceListActivity
+import com.raisproject.destinasi.util.capitalizeWords
 
 class ProvinceAdapter(private var provinceList: ArrayList<ProvinceModel>) :
     RecyclerView.Adapter<ProvinceAdapter.ProvinceHolder>() {
@@ -36,7 +37,7 @@ class ProvinceAdapter(private var provinceList: ArrayList<ProvinceModel>) :
     override fun onBindViewHolder(holder: ProvinceHolder, position: Int) {
         val currentItem = provinceList[position]
 
-        holder.nameProv.text = currentItem.name_prov!!.capitalize()
+        holder.nameProv.text = currentItem.name_prov!!.capitalizeWords()
         Glide.with(holder.itemView.context)
             .load(currentItem.pict_prov)
             .into(holder.pictProv)
