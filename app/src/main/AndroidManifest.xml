@@ -15,6 +15,16 @@
         android:theme="@style/Theme.Destinasi"
         tools:targetApi="31">
         <activity
+            android:name=".ui.splashscreen.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Destinasi">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.destinationlist.DestinationListActivity"
             android:exported="false"
             android:theme="@style/Theme.Destinasi" />
@@ -28,14 +38,8 @@
             android:theme="@style/Theme.Destinasi" />
         <activity
             android:name=".ui.explore.ExploreActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Destinasi">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:theme="@style/Theme.Destinasi" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
