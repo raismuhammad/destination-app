@@ -63,7 +63,7 @@ class DestinationListActivity : AppCompatActivity() {
                     for (document in documents) {
                         destinationList.add(
                             (DestinationModel(
-                                document.id as String,
+                                document?.id as String,
                                 document.data.get("name_destination") as String,
                                 document.data.get("name_prov") as String,
                                 document.data.get("name_category") as String,
